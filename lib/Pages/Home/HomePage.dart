@@ -6,6 +6,7 @@ import 'package:talksync/Config/images.dart';
 import 'package:talksync/Controller/ProfileController.dart';
 import 'package:talksync/Pages/Home/Widgets/ChatsList.dart';
 import 'package:talksync/Pages/Home/Widgets/TabBar.dart';
+import 'package:talksync/Pages/ProfilePage/ProfilePage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,7 +40,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
           IconButton(
             onPressed: () {
-              Get.toNamed("/profilePage");
+              // Get.toNamed("/profilePage");
+              Get.to(ProfilePage());
             },
             icon: Icon(Icons.more_vert),
           ),
