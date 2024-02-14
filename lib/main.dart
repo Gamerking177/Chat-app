@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       getPages: pagePath,
       darkTheme: darkTheme,
       themeMode: ThemeMode.dark,
-      home: ProfilePage(),
+      home: SplacePage(),
     );
   }
 }
