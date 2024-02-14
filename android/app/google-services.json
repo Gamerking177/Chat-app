@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "303992767559",
+    "project_id": "talksync-chat-app",
+    "storage_bucket": "talksync-chat-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:303992767559:android:fbe0b6866f29fff2ba9d62",
+        "android_client_info": {
+          "package_name": "com.example.talksync"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWlMg8bRxVCP4UyZ4-v-nhR8G7-muIZjk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
