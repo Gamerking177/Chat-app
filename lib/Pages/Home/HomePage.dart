@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:talksync/Config/Strings.dart';
 import 'package:talksync/Config/images.dart';
-import 'package:talksync/Controller/ProfileController.dart';
+import 'package:talksync/Controller/ImagePicker.dart';
 import 'package:talksync/Pages/Home/Widgets/ChatsList.dart';
 import 'package:talksync/Pages/Home/Widgets/TabBar.dart';
 import 'package:talksync/Pages/ProfilePage/ProfilePage.dart';
@@ -18,8 +18,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    ProfileController profileController = Get.put(ProfileController());
     TabController tabController = TabController(length: 3, vsync: this);
+    ImagePickerController imagePickerController =
+        Get.put(ImagePickerController());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
@@ -35,7 +36,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              imagePickerController.pickImage();
+            },
             icon: Icon(Icons.search),
           ),
           IconButton(
