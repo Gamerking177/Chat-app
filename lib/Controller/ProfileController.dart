@@ -29,14 +29,14 @@ class ProfileController extends GetxController {
   }
 
   Future<void> updateProfile(
-    String? imageUrl,
-    String? name,
-    String? about,
-    String? number,
+    String imageUrl,
+    String name,
+    String about,
+    String number,
   ) async {
     isLoading.value = true;
     try {
-      final imageLink = await uploadFileToFirebase(imageUrl!);
+      final imageLink = await uploadFileToFirebase(imageUrl);
       final updatedUser = UserModel(
         name: name,
         about: about,
@@ -54,8 +54,8 @@ class ProfileController extends GetxController {
 
   Future<String> uploadFileToFirebase(String imagePath) async {
     final path = "files/${imagePath}";
-    final file = File(imagePath!);
-    if (imagePath != null) {
+    final file = File(imagePath);
+    if (imagePath != "") {
       try {
         final ref = store.ref().child(path).putFile(file);
         final UploadTask = await ref.whenComplete(() => {});
