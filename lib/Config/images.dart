@@ -1,8 +1,11 @@
 class AssetsImage {
   static const iconsPath = "assets/Icons";
   static const imagesPath = "assets/Images";
-  // PNG Icons Only
 
+  static const defaultProfileUrl =
+      "https://firebasestorage.googleapis.com/v0/b/talksync-chat-app.appspot.com/o/boy_pic.png?alt=media&token=329b35c2-8b8d-4eeb-9a81-ab1b7e41ce35";
+
+  // PNG Images Only
   static const boyPic = "$imagesPath/boy_pic.png";
   static const girlPic = "$imagesPath/girl_pic.png";
 

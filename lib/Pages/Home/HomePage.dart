@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:talksync/Config/Strings.dart';
 import 'package:talksync/Config/images.dart';
 import 'package:talksync/Controller/ImagePicker.dart';
+import 'package:talksync/Controller/ProfileController.dart';
 import 'package:talksync/Pages/Home/Widgets/ChatsList.dart';
 import 'package:talksync/Pages/Home/Widgets/TabBar.dart';
 import 'package:talksync/Pages/ProfilePage/ProfilePage.dart';
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     TabController tabController = TabController(length: 3, vsync: this);
+    ProfileController profileController = Get.put(ProfileController());
     ImagePickerController imagePickerController =
         Get.put(ImagePickerController());
     return Scaffold(
@@ -42,8 +44,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             icon: Icon(Icons.search),
           ),
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               // Get.toNamed("/profilePage");
+              await profileController.getUserDetails();
               Get.to(ProfilePage());
             },
             icon: Icon(Icons.more_vert),
@@ -52,7 +55,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         bottom: myTabBar(tabController, context),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.toNamed("/contactPage");
+        },
         backgroundColor: Theme.of(context).colorScheme.primary,
         child: Icon(
           Icons.add,

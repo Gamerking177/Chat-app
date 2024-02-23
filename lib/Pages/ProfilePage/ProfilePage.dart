@@ -28,6 +28,16 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              authController.logoutUser();
+            },
+            icon: Icon(
+              Icons.logout,
+            ),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -89,10 +99,10 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                   child: profileController.currentUser.value
                                                   .profileImage ==
-                                              "" ||
+                                              null ||
                                           profileController.currentUser.value
                                                   .profileImage ==
-                                              null
+                                              ""
                                       ? Icon(
                                           Icons.image,
                                         )
@@ -189,14 +199,6 @@ class ProfilePage extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () {
-                            authController.logoutUser();
-                          },
-                          child: Text(
-                            "Logout",
-                          ),
-                        ),
                       ],
                     ),
                   )
