@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:talksync/Config/images.dart';
+import 'package:talksync/Controller/ChatController.dart';
+import 'package:talksync/Model/UserModel.dart';
 import 'package:talksync/Pages/Chat/Widgets/ChatBubble.dart';
 
 class ChatPage extends StatelessWidget {
-  const ChatPage({super.key});
+  final UserModel userModel;
+  const ChatPage({super.key, required this.userModel});
 
   @override
   Widget build(BuildContext context) {
+    ChatController chatController = Get.put(ChatController());
+    TextEditingController messageController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
@@ -18,7 +24,7 @@ class ChatPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Raushan",
+              userModel.name ?? "user",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             Text(
@@ -59,6 +65,7 @@ class ChatPage extends StatelessWidget {
             SizedBox(width: 10),
             Expanded(
               child: TextField(
+                controller: messageController,
                 decoration: InputDecoration(
                   filled: false,
                   hintText: "Type a message",
@@ -66,13 +73,32 @@ class ChatPage extends StatelessWidget {
               ),
             ),
             SizedBox(width: 10),
-            SvgPicture.asset(
-              AssetsImage.chatGallarySvg,
-              width: 25,
+            Container(
+              width: 30,
+              height: 30,
+              child: SvgPicture.asset(
+                AssetsImage.chatGallarySvg,
+                width: 25,
+              ),
             ),
             SizedBox(width: 10),
-            SvgPicture.asset(
-              AssetsImage.chatsendSvg,
+            InkWell(
+              onTap: () {
+                if (messageController.text.isNotEmpty) {
+                  chatController.sendMessage(
+                    userModel.id!,
+                    messageController.text,
+                  );
+                  messageController.clear();
+                }
+              },
+              child: Container(
+                width: 30,
+                height: 30,
+                child: SvgPicture.asset(
+                  AssetsImage.chatsendSvg,
+                ),
+              ),
             ),
           ],
         ),
@@ -91,22 +117,6 @@ class ChatPage extends StatelessWidget {
             ChatBubble(
               message: "Hii Aksh",
               imageUrl: "",
-              isComming: false,
-              time: "08:45 PM",
-              status: "read",
-            ),
-            ChatBubble(
-              message: "Hii Aksh",
-              imageUrl:
-                  "https://images.unsplash.com/photo-1682686580391-615b1f28e5ee?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              isComming: true,
-              time: "08:45 PM",
-              status: "read",
-            ),
-            ChatBubble(
-              message: "Hii Aksh",
-              imageUrl:
-                  "https://images.unsplash.com/photo-1682686580391-615b1f28e5ee?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
               isComming: false,
               time: "08:45 PM",
               status: "read",

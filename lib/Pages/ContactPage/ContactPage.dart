@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:talksync/Config/images.dart';
+import 'package:talksync/Controller/ChatController.dart';
 import 'package:talksync/Controller/ContactController.dart';
+import 'package:talksync/Pages/Chat/ChatPage.dart';
 import 'package:talksync/Pages/ContactPage/Widgets/ContactSearch.dart';
 import 'package:talksync/Pages/ContactPage/Widgets/NewContactTile.dart';
 import 'package:talksync/Pages/Home/Widgets/ChatTile.dart';
@@ -15,6 +17,7 @@ class ContactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     RxBool isSearchEnable = false.obs;
     ConatctController conatctController = Get.put(ConatctController());
+    ChatController chatController = Get.put(ChatController());
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -68,7 +71,7 @@ class ContactPage extends StatelessWidget {
                     .map(
                       (e) => InkWell(
                         onTap: () {
-                          // Get.toNamed("/chatPage");
+                          Get.to(ChatPage(userModel: e));
                         },
                         child: ChatTile(
                           imageUrl:

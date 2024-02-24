@@ -18,11 +18,11 @@ var pagePath = [
     page: () => HomePage(),
     transition: Transition.rightToLeft,
   ),
-  GetPage(
-    name: "/chatPage",
-    page: () => ChatPage(),
-    transition: Transition.rightToLeft,
-  ),
+  // GetPage(
+  //   name: "/chatPage",
+  //   page: () => ChatPage(),
+  //   transition: Transition.rightToLeft,
+  // ),
   GetPage(
     name: "/profilePage",
     page: () => ProfilePage(),

@@ -3,7 +3,7 @@ class AssetsImage {
   static const imagesPath = "assets/Images";
 
   static const defaultProfileUrl =
-      "https://firebasestorage.googleapis.com/v0/b/talksync-chat-app.appspot.com/o/boy_pic.png?alt=media&token=329b35c2-8b8d-4eeb-9a81-ab1b7e41ce35";
+      "https://firebasestorage.googleapis.com/v0/b/talksync-chat-app.appspot.com/o/default%20profile.png?alt=media&token=5c0af19f-b1ea-4e23-8c4b-d67261b28fd7";
 
   // PNG Images Only
   static const boyPic = "$imagesPath/boy_pic.png";
