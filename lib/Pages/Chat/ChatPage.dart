@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:talksync/Config/images.dart';
 import 'package:talksync/Controller/ChatController.dart';
+import 'package:talksync/Controller/ProfileController.dart';
+import 'package:talksync/Model/ChatModel.dart';
 import 'package:talksync/Model/UserModel.dart';
 import 'package:talksync/Pages/Chat/Widgets/ChatBubble.dart';
 
@@ -14,6 +17,7 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ChatController chatController = Get.put(ChatController());
     TextEditingController messageController = TextEditingController();
+    ProfileController profileController = Get.put(ProfileController());
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
@@ -104,32 +108,46 @@ class ChatPage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView(
-          children: [
-            ChatBubble(
-              message: "Hii Aksh",
-              imageUrl: "",
-              isComming: true,
-              time: "08:54 PM",
-              status: "read",
-            ),
-            ChatBubble(
-              message: "Hii Aksh",
-              imageUrl: "",
-              isComming: false,
-              time: "08:45 PM",
-              status: "read",
-            ),
-            ChatBubble(
-              message: "Hii Aksh",
-              imageUrl:
-                  "https://images.unsplash.com/photo-1682686580391-615b1f28e5ee?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              isComming: true,
-              time: "08:45 PM",
-              status: "read",
-            ),
-          ],
+        padding:
+            const EdgeInsets.only(bottom: 80, top: 10, left: 10, right: 10),
+        child: StreamBuilder(
+          stream: chatController.getMessages(userModel.id!),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (snapshot.hasError) {
+              return Center(
+                child: Text("Error: ${snapshot.error}"),
+              );
+            }
+            if (snapshot.data == null) {
+              return Center(
+                child: Text("No message"),
+              );
+            } else {
+              return ListView.builder(
+                reverse: true,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  DateTime timestamp =
+                      DateTime.parse(snapshot.data![index].timestamp!);
+                  String formattedTime =
+                      DateFormat('hh:mm a').format(timestamp);
+                  return ChatBubble(
+                    message: snapshot.data![index].message!,
+                    isComming: snapshot.data![index].receiverId ==
+                        profileController.currentUser.value.id!,
+                    time: formattedTime,
+                    status: "read",
+                    imageUrl: snapshot.data![index].imageUrl ?? "",
+                  );
+                },
+              );
+            }
+          },
         ),
       ),
     );
