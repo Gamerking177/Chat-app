@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:talksync/Config/images.dart';
 import 'package:talksync/Controller/ChatController.dart';
 import 'package:talksync/Controller/ContactController.dart';
+import 'package:talksync/Controller/ProfileController.dart';
 import 'package:talksync/Pages/Chat/ChatPage.dart';
 import 'package:talksync/Pages/ContactPage/Widgets/ContactSearch.dart';
 import 'package:talksync/Pages/ContactPage/Widgets/NewContactTile.dart';
@@ -18,6 +19,7 @@ class ContactPage extends StatelessWidget {
     RxBool isSearchEnable = false.obs;
     ConatctController conatctController = Get.put(ConatctController());
     ChatController chatController = Get.put(ChatController());
+    ProfileController profileController = Get.put(ProfileController());
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -78,7 +80,10 @@ class ContactPage extends StatelessWidget {
                               e.profileImage ?? AssetsImage.defaultProfileUrl,
                           name: e.name ?? "User",
                           lastChat: e.about ?? "Hey there",
-                          lastTime: "",
+                          lastTime: e.email ==
+                                  profileController.currentUser.value.email
+                              ? "You"
+                              : "",
                         ),
                       ),
                     )

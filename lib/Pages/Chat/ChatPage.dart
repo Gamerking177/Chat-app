@@ -5,9 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:talksync/Config/images.dart';
 import 'package:talksync/Controller/ChatController.dart';
 import 'package:talksync/Controller/ProfileController.dart';
-import 'package:talksync/Model/ChatModel.dart';
 import 'package:talksync/Model/UserModel.dart';
 import 'package:talksync/Pages/Chat/Widgets/ChatBubble.dart';
+import 'package:talksync/Pages/UserProfile/ProfilePage.dart';
 
 class ChatPage extends StatelessWidget {
   final UserModel userModel;
@@ -20,22 +20,44 @@ class ChatPage extends StatelessWidget {
     ProfileController profileController = Get.put(ProfileController());
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
-          padding: EdgeInsets.only(left: 10),
-          child: Image.asset(AssetsImage.boyPic),
+        leading: InkWell(
+          onTap: () {
+            Get.to(
+              UserProfilePage(
+                userModel: userModel,
+              ),
+            );
+          },
+          child: Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: Image.asset(AssetsImage.boyPic),
+          ),
         ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              userModel.name ?? "user",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            Text(
-              "Online",
-              style: Theme.of(context).textTheme.labelSmall,
-            ),
-          ],
+        title: InkWell(
+          onTap: () {
+            Get.to(
+              UserProfilePage(
+                userModel: userModel,
+              ),
+            );
+          },
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    userModel.name ?? "user",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  Text(
+                    "Online",
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
         actions: [
           IconButton(
@@ -92,6 +114,7 @@ class ChatPage extends StatelessWidget {
                   chatController.sendMessage(
                     userModel.id!,
                     messageController.text,
+                    userModel,
                   );
                   messageController.clear();
                 }

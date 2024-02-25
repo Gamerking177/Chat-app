@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:talksync/Controller/ProfileController.dart';
 import 'package:talksync/Model/ChatModel.dart';
+import 'package:talksync/Model/ChatRoomModel.dart';
+import 'package:talksync/Model/UserModel.dart';
 import 'package:uuid/uuid.dart';
 
 class ChatController extends GetxController {
@@ -21,7 +23,8 @@ class ChatController extends GetxController {
     }
   }
 
-  Future<void> sendMessage(String targetUserId, String message) async {
+  Future<void> sendMessage(
+      String targetUserId, String message, UserModel targetUser) async {
     isLoading.value = true;
     String chatId = uuid.v6();
     String roomId = getRoomId(targetUserId);
@@ -33,7 +36,20 @@ class ChatController extends GetxController {
       senderName: profileController.currentUser.value.name,
       timestamp: DateTime.now().toString(),
     );
+
+    var roomDetails = ChatRoomModel(
+      id: roomId,
+      lastMessage: message,
+      lastMessageTimestamp: DateTime.now().toString(),
+      sender: profileController.currentUser.value,
+      receiver: targetUser,
+      timestamp: DateTime.now().toString(),
+      unReadMsgNo: 0,
+    );
     try {
+      await db.collection("chats").doc(roomId).set(
+            roomDetails.toJson(),
+          );
       await db
           .collection("chats")
           .doc(roomId)
