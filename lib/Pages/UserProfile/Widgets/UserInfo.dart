@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:talksync/Config/images.dart';
@@ -36,9 +38,13 @@ class LoginUserInfo extends StatelessWidget {
                       height: 150,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: Image.network(
-                          profileImage,
+                        child: CachedNetworkImage(
+                          imageUrl: profileImage,
                           fit: BoxFit.cover,
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
                         ),
                       ),
                     ),
@@ -139,7 +145,7 @@ class LoginUserInfo extends StatelessWidget {
                             style: TextStyle(
                               color: Color(0xff0057FF),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

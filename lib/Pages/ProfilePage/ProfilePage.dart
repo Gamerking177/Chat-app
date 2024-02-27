@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:talksync/Controller/AuthController.dart';
@@ -109,10 +110,17 @@ class ProfilePage extends StatelessWidget {
                                       : ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(100),
-                                          child: Image.network(
-                                            profileController.currentUser.value
+                                          child: CachedNetworkImage(
+                                            imageUrl: profileController
+                                                .currentUser
+                                                .value
                                                 .profileImage!,
                                             fit: BoxFit.cover,
+                                            placeholder: (context, url) =>
+                                                CircularProgressIndicator(),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
                                           ),
                                         ),
                                 ),
