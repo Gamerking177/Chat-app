@@ -40,7 +40,11 @@ class ConatctController extends GetxController {
 
   Future<void> getChatRoomList() async {
     List<ChatRoomModel> tempChatRoomList = [];
-    await db.collection("chats").get().then(
+    await db
+        .collection("chats")
+        .orderBy("timestamp", descending: true)
+        .get()
+        .then(
       (value) {
         tempChatRoomList = value.docs
             .map(

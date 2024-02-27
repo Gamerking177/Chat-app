@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:talksync/Config/PagePath.dart';
 import 'package:talksync/Config/Theme.dart';
-import 'package:talksync/Pages/Home/HomePage.dart';
-import 'package:talksync/Pages/UserProfile/ProfilePage.dart';
 import 'package:talksync/Pages/SpalcePage/Splacepage.dart';
 import 'package:talksync/firebase_options.dart';
 
