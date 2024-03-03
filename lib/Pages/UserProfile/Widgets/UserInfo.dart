@@ -3,9 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:talksync/Config/images.dart';
-import 'package:talksync/Controller/ProfileController.dart';
 
 class LoginUserInfo extends StatelessWidget {
   final String profileImage;
@@ -19,7 +17,6 @@ class LoginUserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProfileController profileController = Get.put(ProfileController());
     return Container(
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -70,9 +67,9 @@ class LoginUserInfo extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       height: 50,
@@ -88,7 +85,7 @@ class LoginUserInfo extends StatelessWidget {
                             width: 25,
                           ),
                           SizedBox(
-                            width: 10,
+                            width: 5,
                           ),
                           Text(
                             "Call",
@@ -114,7 +111,7 @@ class LoginUserInfo extends StatelessWidget {
                             color: Color(0xffFF9900),
                           ),
                           SizedBox(
-                            width: 10,
+                            width: 5,
                           ),
                           Text(
                             "Video",
@@ -139,7 +136,7 @@ class LoginUserInfo extends StatelessWidget {
                             width: 25,
                           ),
                           SizedBox(
-                            width: 10,
+                            width: 5,
                           ),
                           Text(
                             "Chat",
@@ -154,7 +151,7 @@ class LoginUserInfo extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

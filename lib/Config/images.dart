@@ -19,6 +19,7 @@ class AssetsImage {
   static const chatsendSvg = "$iconsPath/send.svg";
   static const chatMicSvg = "$iconsPath/mic.svg";
   static const chatGallarySvg = "$iconsPath/gallary.svg";
+  static const chatEmoji = "$iconsPath/emoji.svg";
 
   // Profile Icons only
   static const profileVideoCall = "$iconsPath/videoCall.svg";

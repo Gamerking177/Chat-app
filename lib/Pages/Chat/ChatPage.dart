@@ -1,5 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:talksync/Config/images.dart';
@@ -7,6 +7,7 @@ import 'package:talksync/Controller/ChatController.dart';
 import 'package:talksync/Controller/ProfileController.dart';
 import 'package:talksync/Model/UserModel.dart';
 import 'package:talksync/Pages/Chat/Widgets/ChatBubble.dart';
+import 'package:talksync/Pages/Chat/Widgets/TypeMessage.dart';
 import 'package:talksync/Pages/UserProfile/ProfilePage.dart';
 
 class ChatPage extends StatelessWidget {
@@ -15,12 +16,13 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ChatController chatController = Get.put(ChatController());
-    TextEditingController messageController = TextEditingController();
     ProfileController profileController = Get.put(ProfileController());
+    ChatController chatController = Get.put(ChatController());
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           onTap: () {
             Get.to(
               UserProfilePage(
@@ -29,11 +31,22 @@ class ChatPage extends StatelessWidget {
             );
           },
           child: Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Image.asset(AssetsImage.boyPic),
+            padding: EdgeInsets.all(5),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: CachedNetworkImage(
+                imageUrl:
+                    userModel.profileImage ?? AssetsImage.defaultProfileUrl,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
+            ),
           ),
         ),
         title: InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           onTap: () {
             Get.to(
               UserProfilePage(
@@ -75,60 +88,8 @@ class ChatPage extends StatelessWidget {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        margin: EdgeInsets.all(10),
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
-          color: Theme.of(context).colorScheme.primaryContainer,
-        ),
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              AssetsImage.chatMicSvg,
-              width: 25,
-            ),
-            SizedBox(width: 10),
-            Expanded(
-              child: TextField(
-                controller: messageController,
-                decoration: InputDecoration(
-                  filled: false,
-                  hintText: "Type a message",
-                ),
-              ),
-            ),
-            SizedBox(width: 10),
-            Container(
-              width: 30,
-              height: 30,
-              child: SvgPicture.asset(
-                AssetsImage.chatGallarySvg,
-                width: 25,
-              ),
-            ),
-            SizedBox(width: 10),
-            InkWell(
-              onTap: () {
-                if (messageController.text.isNotEmpty) {
-                  chatController.sendMessage(
-                    userModel.id!,
-                    messageController.text,
-                    userModel,
-                  );
-                  messageController.clear();
-                }
-              },
-              child: Container(
-                width: 30,
-                height: 30,
-                child: SvgPicture.asset(
-                  AssetsImage.chatsendSvg,
-                ),
-              ),
-            ),
-          ],
-        ),
+      floatingActionButton: TypeMessage(
+        userModel: userModel,
       ),
       body: Padding(
         padding:

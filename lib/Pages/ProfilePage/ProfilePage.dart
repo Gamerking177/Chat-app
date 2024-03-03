@@ -59,6 +59,8 @@ class ProfilePage extends StatelessWidget {
                         Obx(
                           () => isEdit.value
                               ? InkWell(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
                                   onTap: () async {
                                     imagePath.value =
                                         await imagePickerController.pickImage();

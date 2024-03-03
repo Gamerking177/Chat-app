@@ -21,6 +21,8 @@ class ChatList extends StatelessWidget {
           children: conatctController.chatRoomList
               .map(
                 (e) => InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   onTap: () {
                     Get.to(
                       ChatPage(
