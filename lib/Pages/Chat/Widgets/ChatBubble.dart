@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:talksync/Config/images.dart';
@@ -55,10 +56,17 @@ class ChatBubble extends StatelessWidget {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.network(imageUrl),
+                        child: CachedNetworkImage(
+                          imageUrl: imageUrl,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
                       ),
-                      SizedBox(height: 10),
-                      Text(message),
+                      message == "" ? Container() : SizedBox(height: 10),
+                      message == "" ? Container() : Text(message),
                     ],
                   ),
           ),

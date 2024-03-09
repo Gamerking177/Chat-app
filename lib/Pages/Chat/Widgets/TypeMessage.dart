@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:talksync/Config/images.dart';
 import 'package:talksync/Controller/ChatController.dart';
+import 'package:talksync/Controller/ImagePicker.dart';
 import 'package:talksync/Model/UserModel.dart';
 
 class TypeMessage extends StatelessWidget {
@@ -14,6 +15,8 @@ class TypeMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     ChatController chatController = Get.put(ChatController());
     TextEditingController messageController = TextEditingController();
+    ImagePickerController imagePickerController =
+        Get.put(ImagePickerController());
     RxString message = "".obs;
     return Container(
       margin: EdgeInsets.all(10),
@@ -46,30 +49,34 @@ class TypeMessage extends StatelessWidget {
             ),
           ),
           SizedBox(width: 10),
-          Container(
-            width: 30,
-            height: 30,
-            child: SvgPicture.asset(
-              AssetsImage.chatGallarySvg,
-              width: 25,
-            ),
+          Obx(
+            () => chatController.selectedImagePath.value == ""
+                ? InkWell(
+                    onTap: () async {
+                      chatController.selectedImagePath.value =
+                          await imagePickerController.pickImage();
+                    },
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      child: SvgPicture.asset(
+                        AssetsImage.chatGallarySvg,
+                        width: 25,
+                      ),
+                    ),
+                  )
+                : SizedBox(),
           ),
           SizedBox(width: 10),
           Obx(
-            () => message.value == ""
-                ? Container(
-                    width: 30,
-                    height: 30,
-                    child: SvgPicture.asset(
-                      AssetsImage.chatMicSvg,
-                      width: 25,
-                    ),
-                  )
-                : InkWell(
+            () => message.value != "" ||
+                    chatController.selectedImagePath.value != ""
+                ? InkWell(
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
-                      if (messageController.text.isNotEmpty) {
+                      if (messageController.text.isNotEmpty ||
+                          chatController.selectedImagePath.value.isNotEmpty) {
                         chatController.sendMessage(
                           userModel.id!,
                           messageController.text,
@@ -82,9 +89,19 @@ class TypeMessage extends StatelessWidget {
                     child: Container(
                       width: 30,
                       height: 30,
-                      child: SvgPicture.asset(
-                        AssetsImage.chatsendSvg,
-                      ),
+                      child: chatController.isLoading.value
+                          ? CircularProgressIndicator()
+                          : SvgPicture.asset(
+                              AssetsImage.chatsendSvg,
+                            ),
+                    ),
+                  )
+                : Container(
+                    width: 30,
+                    height: 30,
+                    child: SvgPicture.asset(
+                      AssetsImage.chatMicSvg,
+                      width: 25,
                     ),
                   ),
           ),

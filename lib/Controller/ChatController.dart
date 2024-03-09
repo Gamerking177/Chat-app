@@ -12,6 +12,7 @@ class ChatController extends GetxController {
   final auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
   RxBool isLoading = false.obs;
+  RxString selectedImagePath = "".obs;
   var uuid = Uuid();
   ProfileController profileController = Get.put(ProfileController());
 
@@ -57,9 +58,16 @@ class ChatController extends GetxController {
     UserModel receiver =
         getReciver(profileController.currentUser.value, targetUser);
 
+    RxString imageUrl = "".obs;
+    if (selectedImagePath.value.isNotEmpty) {
+      imageUrl.value =
+          await profileController.uploadFileToFirebase(selectedImagePath.value);
+    }
+
     var newChat = ChatModel(
       id: chatId,
       message: message,
+      imageUrl: imageUrl.value,
       senderId: auth.currentUser!.uid,
       receiverId: targetUserId,
       senderName: profileController.currentUser.value.name,
@@ -84,6 +92,7 @@ class ChatController extends GetxController {
           .set(
             newChat.toJson(),
           );
+      selectedImagePath.value = "";
       await db.collection("chats").doc(roomId).set(
             roomDetails.toJson(),
           );

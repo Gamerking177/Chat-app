@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:talksync/Config/images.dart';
@@ -87,51 +90,101 @@ class ChatPage extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: TypeMessage(
-        userModel: userModel,
-      ),
       body: Padding(
         padding:
-            const EdgeInsets.only(bottom: 80, top: 10, left: 10, right: 10),
-        child: StreamBuilder(
-          stream: chatController.getMessages(userModel.id!),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (snapshot.hasError) {
-              return Center(
-                child: Text("Error: ${snapshot.error}"),
-              );
-            }
-            if (snapshot.data == null) {
-              return Center(
-                child: Text("No message"),
-              );
-            } else {
-              return ListView.builder(
-                reverse: true,
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  DateTime timestamp =
-                      DateTime.parse(snapshot.data![index].timestamp!);
-                  String formattedTime =
-                      DateFormat('hh:mm a').format(timestamp);
-                  return ChatBubble(
-                    message: snapshot.data![index].message!,
-                    isComming: snapshot.data![index].receiverId ==
-                        profileController.currentUser.value.id!,
-                    time: formattedTime,
-                    status: "read",
-                    imageUrl: snapshot.data![index].imageUrl ?? "",
-                  );
-                },
-              );
-            }
-          },
+            const EdgeInsets.only(bottom: 10, top: 10, left: 10, right: 10),
+        child: Column(
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  StreamBuilder(
+                    stream: chatController.getMessages(userModel.id!),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text("Error: ${snapshot.error}"),
+                        );
+                      }
+                      if (snapshot.data == null) {
+                        return Center(
+                          child: Text("No message"),
+                        );
+                      } else {
+                        return ListView.builder(
+                          reverse: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            DateTime timestamp = DateTime.parse(
+                                snapshot.data![index].timestamp!);
+                            String formattedTime =
+                                DateFormat('hh:mm a').format(timestamp);
+                            return ChatBubble(
+                              message: snapshot.data![index].message!,
+                              isComming: snapshot.data![index].receiverId ==
+                                  profileController.currentUser.value.id!,
+                              time: formattedTime,
+                              status: "read",
+                              imageUrl: snapshot.data![index].imageUrl ?? "",
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
+                  Obx(
+                    () => (chatController.selectedImagePath.value != "")
+                        ? Positioned(
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: FileImage(
+                                          File(
+                                            chatController
+                                                .selectedImagePath.value,
+                                          ),
+                                        ),
+                                        fit: BoxFit.contain),
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
+                                  ),
+                                  height: 400,
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      chatController.selectedImagePath.value =
+                                          "";
+                                    },
+                                    icon: Icon(Icons.close),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Container(),
+                  ),
+                ],
+              ),
+            ),
+            TypeMessage(
+              userModel: userModel,
+            ),
+          ],
         ),
       ),
     );
