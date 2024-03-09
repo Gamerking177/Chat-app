@@ -6,6 +6,7 @@ import 'package:talksync/Config/images.dart';
 import 'package:talksync/Controller/ChatController.dart';
 import 'package:talksync/Controller/ImagePicker.dart';
 import 'package:talksync/Model/UserModel.dart';
+import 'package:talksync/Widgets/ImagePickerBottomSheet.dart';
 
 class TypeMessage extends StatelessWidget {
   final UserModel userModel;
@@ -52,9 +53,9 @@ class TypeMessage extends StatelessWidget {
           Obx(
             () => chatController.selectedImagePath.value == ""
                 ? InkWell(
-                    onTap: () async {
-                      chatController.selectedImagePath.value =
-                          await imagePickerController.pickImage();
+                    onTap: () {
+                      ImagePickerBottomSheet(
+                          context, chatController, imagePickerController);
                     },
                     child: Container(
                       width: 30,
