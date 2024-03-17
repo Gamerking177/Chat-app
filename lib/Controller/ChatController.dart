@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:talksync/Controller/ContactController.dart';
 import 'package:talksync/Controller/ProfileController.dart';
 import 'package:talksync/Model/ChatModel.dart';
 import 'package:talksync/Model/ChatRoomModel.dart';
@@ -15,6 +16,7 @@ class ChatController extends GetxController {
   RxString selectedImagePath = "".obs;
   var uuid = Uuid();
   ProfileController profileController = Get.put(ProfileController());
+  ConatctController conatctController = Get.put(ConatctController());
 
   String getRoomId(String targetUserId) {
     String currentUserId = auth.currentUser!.uid;
@@ -96,6 +98,7 @@ class ChatController extends GetxController {
       await db.collection("chats").doc(roomId).set(
             roomDetails.toJson(),
           );
+      await conatctController.saveContact(targetUser);
     } catch (e) {
       print(e);
     }

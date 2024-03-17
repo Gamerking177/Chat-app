@@ -5,6 +5,7 @@ import 'package:talksync/Config/Strings.dart';
 import 'package:talksync/Config/images.dart';
 import 'package:talksync/Controller/ContactController.dart';
 import 'package:talksync/Controller/ProfileController.dart';
+import 'package:talksync/Pages/Groups/GroupsPage.dart';
 import 'package:talksync/Pages/Home/Widgets/ChatsList.dart';
 import 'package:talksync/Pages/Home/Widgets/TabBar.dart';
 import 'package:talksync/Pages/ProfilePage/ProfilePage.dart';
@@ -69,13 +70,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           controller: tabController,
           children: [
             ChatList(),
-            ListView(
-              children: [
-                ListTile(
-                  title: Text("Name Aksh"),
-                ),
-              ],
-            ),
+            GroupPage(),
             ListView(
               children: [
                 ListTile(

@@ -8,6 +8,7 @@ import 'package:talksync/Controller/ProfileController.dart';
 import 'package:talksync/Pages/Chat/ChatPage.dart';
 import 'package:talksync/Pages/ContactPage/Widgets/ContactSearch.dart';
 import 'package:talksync/Pages/ContactPage/Widgets/NewContactTile.dart';
+import 'package:talksync/Pages/Groups/NewGroup/NewGroup.dart';
 import 'package:talksync/Pages/Home/Widgets/ChatTile.dart';
 
 class ContactPage extends StatelessWidget {
@@ -58,7 +59,9 @@ class ContactPage extends StatelessWidget {
             NewContactTile(
               btnName: "New Group",
               icon: Icons.group,
-              ontap: () {},
+              ontap: () {
+                Get.to(NewGroup());
+              },
             ),
             SizedBox(height: 10),
             Row(
