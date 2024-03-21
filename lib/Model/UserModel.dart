@@ -8,17 +8,20 @@ class UserModel {
   String? createdAt;
   String? lastonlineStatus;
   String? status;
+  String? role;
 
-  UserModel(
-      {this.id,
-      this.name,
-      this.email,
-      this.profileImage,
-      this.phoneNumber,
-      this.about,
-      this.createdAt,
-      this.lastonlineStatus,
-      this.status});
+  UserModel({
+    this.id,
+    this.name,
+    this.email,
+    this.profileImage,
+    this.phoneNumber,
+    this.about,
+    this.createdAt,
+    this.lastonlineStatus,
+    this.status,
+    this.role,
+  });
 
   UserModel.fromJson(Map<String, dynamic> json) {
     if (json["id"] is String) {
@@ -48,6 +51,9 @@ class UserModel {
     if (json["Status"] is String) {
       status = json["Status"];
     }
+    if (json["role"] is String) {
+      role = json["role"];
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -61,6 +67,7 @@ class UserModel {
     _data["CreatedAt"] = createdAt;
     _data["LastonlineStatus"] = lastonlineStatus;
     _data["Status"] = status;
+    _data["role"] = role;
     return _data;
   }
 }
