@@ -24,4 +24,6 @@ class AssetsImage {
   // Profile Icons only
   static const profileVideoCall = "$iconsPath/videoCall.svg";
   static const profileAudioCall = "$iconsPath/call.svg";
+
+  static const groupAddUser = "$iconsPath/addUser.svg";
 }

@@ -19,6 +19,7 @@ class TypeMessage extends StatelessWidget {
     ImagePickerController imagePickerController =
         Get.put(ImagePickerController());
     RxString message = "".obs;
+    RxString imagePath = "".obs;
     return Container(
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
@@ -55,7 +56,7 @@ class TypeMessage extends StatelessWidget {
                 ? InkWell(
                     onTap: () {
                       ImagePickerBottomSheet(
-                          context, chatController, imagePickerController);
+                          context, imagePath, imagePickerController);
                     },
                     child: Container(
                       width: 30,

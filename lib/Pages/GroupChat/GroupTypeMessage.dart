@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:talksync/Config/images.dart';
-import 'package:talksync/Controller/ChatController.dart';
 import 'package:talksync/Controller/GroupController.dart';
 import 'package:talksync/Controller/ImagePicker.dart';
 import 'package:talksync/Model/GroupModel.dart';
@@ -15,7 +14,6 @@ class GroupTypeMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ChatController chatController = Get.put(ChatController());
     TextEditingController messageController = TextEditingController();
     ImagePickerController imagePickerController =
         Get.put(ImagePickerController());
@@ -53,11 +51,13 @@ class GroupTypeMessage extends StatelessWidget {
           ),
           SizedBox(width: 10),
           Obx(
-            () => chatController.selectedImagePath.value == ""
+            () => groupController.selectedImagePath.value == ""
                 ? InkWell(
                     onTap: () {
                       ImagePickerBottomSheet(
-                          context, chatController, imagePickerController);
+                          context,
+                          groupController.selectedImagePath,
+                          imagePickerController);
                     },
                     child: Container(
                       width: 30,
@@ -73,7 +73,7 @@ class GroupTypeMessage extends StatelessWidget {
           SizedBox(width: 10),
           Obx(
             () => message.value != "" ||
-                    chatController.selectedImagePath.value != ""
+                    groupController.selectedImagePath.value != ""
                 ? InkWell(
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -89,7 +89,7 @@ class GroupTypeMessage extends StatelessWidget {
                     child: Container(
                       width: 30,
                       height: 30,
-                      child: chatController.isLoading.value
+                      child: groupController.isLoading.value
                           ? CircularProgressIndicator()
                           : SvgPicture.asset(
                               AssetsImage.chatsendSvg,
