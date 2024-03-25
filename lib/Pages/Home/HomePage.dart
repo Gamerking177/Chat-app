@@ -5,6 +5,7 @@ import 'package:talksync/Config/Strings.dart';
 import 'package:talksync/Config/images.dart';
 import 'package:talksync/Controller/ContactController.dart';
 import 'package:talksync/Controller/ProfileController.dart';
+import 'package:talksync/Controller/StatusController.dart';
 import 'package:talksync/Pages/Groups/GroupsPage.dart';
 import 'package:talksync/Pages/Home/Widgets/ChatsList.dart';
 import 'package:talksync/Pages/Home/Widgets/TabBar.dart';
@@ -23,6 +24,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     TabController tabController = TabController(length: 3, vsync: this);
     ProfileController profileController = Get.put(ProfileController());
     ConatctController conatctController = Get.put(ConatctController());
+    StatusController statusController = Get.put(StatusController());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,

@@ -3,7 +3,6 @@ import 'package:talksync/Config/images.dart';
 import 'package:talksync/Model/GroupModel.dart';
 import 'package:talksync/Pages/GroupInfo/GroupMemberInfo.dart';
 import 'package:talksync/Pages/Home/Widgets/ChatTile.dart';
-import 'package:talksync/Pages/UserProfile/Widgets/UserInfo.dart';
 
 class GroupInfo extends StatelessWidget {
   final GroupModel groupModel;
